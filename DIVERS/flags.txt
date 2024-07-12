@@ -74,7 +74,7 @@ flag05:
 flag06:
 	Apres analyse du programme 'level06' a la racine home
 	On vois qu'il execute un script php 'level06.php' avec les droit de l'utilisateur flag06
-	Ce dernier script ouvre un fichier au chemein indique par le premier parametre et applique de multiple filtres sur ce dernier
+	Ce dernier script ouvre un fichier au chemin indique par le premier parametre et applique de multiple filtres sur ce dernier
 	Il a aussi un deuxieme parametre qui n'est pas utilise
 
 	Apres avoir fais des recherches j'ai trouve une faille dans la fonction de filtre 'preg_replace' en php:
