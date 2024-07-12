@@ -1,8 +1,8 @@
 # level10
 
-### Observations:
+### Observations
 
-##### Je decompile le programme accessible dans le dossier utilisateur:
+##### Je decompile le programme '~/level10':
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
 {
@@ -66,25 +66,30 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-##### Entrees du programme
+##### Details du programme:
+```bash
+-rwsr-sr-x+ 1 flag10  level10 10817 Mar  5  2016 level10
+```
+
+##### Entrees du programme:
 ```c
 char *chemin_fichier
 char *addresse_ip
 ```
 
-##### Fonctionnement
+##### Fonctionnement:
 Le programme verifie si le chemin_fichier est accessible par l'utilisateur a l'aide de la fonction access. \
 Puis se connecte a un serveur avec addresse_ip pour par la suite ouvrir le fichier avec la fonction open.
 
-> Le serveur est heberge sur l'addresse ip '127.0.0.1' avec le port '6969'
+> Le serveur est heberge sur le port '6969'.
 
-##### Conclusions
+##### Conclusions:
 L'ordre d'execution des fonctions cree une faille qui nous permet de 
 modifier le fichier pointant a la fin du chemin_fichier pendant la connection.
 Cette operation leurre la fonction open sur le fait que nous avons les \
 droits sur ce fichier du au fait que la fonction access retient les drois d'ouverture.
 
-### Resolution:
+### Resolution
 Je cree un script qui effectue trois operations distinctes en parallele.
 
 La premiere consiste en une boucle qui cree un lien symbolique vers un fichier accessible par l'utilisateur \
@@ -144,5 +149,5 @@ chmod +x /tmp/script.sh
 ```
 
 **flag :** woupa2yuojeeaaed06riuj63c
-	
+
 **token :** feulo4b72j7edeahuete3no7c

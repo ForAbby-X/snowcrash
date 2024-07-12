@@ -195,7 +195,7 @@ flag12:
 	Seul probleme, le script perle applique deux filtres sur l'entree utilisteur avant d'executer egrep.
 	Le premier filtre consiste a transformer tout les caracteres minuscule en majuscule.
 	Le second enleve tout ce qui precede un separateur (soit: ' ;:./,').
-	Nous allons donc devoir trouver un moyen d'injecter un code sans espace et uniquement qvec des caracteres majuscule.
+	Nous allons donc devoir trouver un moyen d'injecter un code sans espace et uniquement avec des caracteres majuscule.
 	
 	Pour ce faire nous creeons un lien symbolique dans un dossier libre de droit pour notre utilisateur soit '/tmp/GETFLAG' redirigeant vers '/bin/getflag'.
 	Ainsi nous avons regle le probleme du filtre des majuscules.

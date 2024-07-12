@@ -1,7 +1,7 @@
 # level11
 
-### Observations:
-##### J'affiche le programme accessible dans le dossier utilisateur:
+### Observations
+##### J'affiche le programme '~/level11.lua':
 ```lua
 #!/usr/bin/env lua
 local socket = require("socket")
@@ -38,30 +38,40 @@ while 1 do
   client:close()
 end
 ```
+
+##### Details du programme:
+```bash
+-rwsr-sr-x  1 flag11  level11  668 Mar  5  2016 level11.lua
+```
+
 Je me rend compte que ce programme est execute par defaut en tant qu'utilisateur 'flag11' grace a la commande:
 ```sh
 ps aux | grep flag11
 ```
 
-##### Entrees du programme
+##### Entrees du programme:
 ```lua
 string mot_de_passe
 ```
 
-##### Fonctionnement
-Le programme est un serveur qui tente de hasher la chaine de caracteres entree par l'utilisateur.
+##### Fonctionnement:
+Le programme est un serveur tcp qui tente de hasher la chaine de caracteres entree par l'utilisateur. \
 Il compare ensuite la chaine hashee avec une chaine predefinie pour afficher differents messages inutiles. 
 
 > Le serveur est heberge sur l'addresse ip '127.0.0.1' avec le port '5151'.
 
 > Le serveur est execute en arriere-plan grace a cron par defaut.
 
-##### Conclusions
+##### Conclusions:
 La fonction hash a une vulnerabilite qui nous laisse executer du code shell comme nous le voulons. \
-Vu que ce programme est execute par l'utilisateur 'flag11' par defaut nous pouvons avoir acces a son flag. 
+Vu que ce programme est execute par l'utilisateur 'flag11' par defaut nous pouvons avoir acces a son flag.
 
-## Resolution:
-J'effectue une commande qui permet d'obtenir le resultat de 'getflag' une fois que le parseur lua aura effectue une passe, par la suite je redirige la sortie de cette derniere dans un fichier accessible car je ne pouvais pas la voir autrement. \
+> La ligne suivante est la cause de la vulnerabilite: \
+> prog = io.popen("echo "..pass.." | sha1sum", "r")
+
+### Resolution
+J'effectue une commande qui permet d'obtenir le resultat de la commande 'getflag' une fois dans le programme. \
+Par la suite je redirige la sortie de cette derniere dans un fichier accessible car je ne pouvais pas la voir autrement. \
 J'affiche ensuite le contenu de ce fichier.
 
 #### commandes:
