@@ -61,7 +61,7 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 ```
 
 ##### Fonctionnement:
-C'est un programme simple compose de deux fonctions:
+C'est un programme simple composé de deux fonctions:
  - La fonction \<main> qui execute la fonction \<ft_des> si l'utilisateur qui execute le programme a l'id 4242.
  - La fonction \<dt_des> qui decrypte une chaine de caracteres encryptee au format 'des'
 

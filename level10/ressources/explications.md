@@ -2,7 +2,7 @@
 
 ### Observations
 
-##### Je decompile le programme '~/level10':
+##### Je décompile le programme '~/level10':
 ```c
 int __cdecl main(int argc, const char **argv, const char **envp)
 {
@@ -66,41 +66,40 @@ int __cdecl main(int argc, const char **argv, const char **envp)
 }
 ```
 
-##### Details du programme:
+##### Détails du programme:
 ```bash
 -rwsr-sr-x+ 1 flag10  level10 10817 Mar  5  2016 level10
 ```
 
-##### Entrees du programme:
+##### Entrées du programme:
 ```c
 char *chemin_fichier
 char *addresse_ip
 ```
 
 ##### Fonctionnement:
-Le programme verifie si le chemin_fichier est accessible par l'utilisateur a l'aide de la fonction access. \
-Puis se connecte a un serveur avec addresse_ip pour par la suite ouvrir le fichier avec la fonction open.
+Le programme vérifie si le chemin_fichier est accessible par l'utilisateur à l'aide de la fonction access. \
+Puis se connecte à un serveur avec l'addresse_ip pour par la suite ouvrir le fichier avec la fonction open.
 
-> Le serveur est heberge sur le port '6969'.
+> Le serveur est hébergé sur le port '6969'.
 
 ##### Conclusions:
-L'ordre d'execution des fonctions cree une faille qui nous permet de 
-modifier le fichier pointant a la fin du chemin_fichier pendant la connection.
-Cette operation leurre la fonction open sur le fait que nous avons les \
-droits sur ce fichier du au fait que la fonction access retient les drois d'ouverture.
+L'ordre d'exécution des fonctions créé une faille qui nous permet de modifier le fichier pointant à la fin du chemin_fichier pendant la connection. \
+Cette opération leurre la fonction open sur le fait que nous avons les droits sur ce fichier dû au fait que la fonction access retient les drois d'ouverture.
 
-### Resolution
-Je cree un script qui effectue trois operations distinctes en parallele.
+### Résolution
+Je créé un script qui effectue trois opérations distinctes en parallele.
 
-La premiere consiste en une boucle qui cree un lien symbolique vers un fichier accessible par l'utilisateur \
-pour ensuite le modifier pour pointer vers le fichier ou le token est stocke dans la racine HOME.
+ 1. La premiere consiste en une boucle qui créé un lien symbolique vers un fichier accessible par l'utilisateur \
+ pour ensuite le modifier vers un fichier innaccessible par l'utilisateur.
 
-La seconde est composee d'une boucle qui execute le programme '~/level10' tout en pointant sur le lien symbolique cree et modifie par la boucle de l'operation precedente.
+ 2. La seconde est composée d'une boucle qui exécute le programme '~/level10' tout en pointant sur le lien symbolique \
+ créé et modifié par la boucle de l'opération précédente.
 
-La derniere est une simple boucle qui recupere les donnees circulant sur le port reseau 6969 et affiche le resultat quand ce n'est pas le contenu du fichier accessible (soit l'executable '~/level10').
+ 3. La dernière est une simple boucle qui récupère les données circulant sur le port réseau 6969 et affiche le resultat \
+ quand ce n'est pas le contenu du fichier accessible (soit le programme).
 
-Il ne me reste plus qu'a lui donner les droits d'execution et de l'executer pour avoir mon flag.
-
+Il ne me reste plus qu'à lui donner les droits d'exécution et de l'exécuter pour avoir mon flag.
 
 ##### /tmp/script.sh :
 ```bash

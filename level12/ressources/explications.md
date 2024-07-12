@@ -34,42 +34,42 @@ sub n {
 n(t(param("x"), param("y")));
 ```
 
-##### Details du programme:
+##### Détails du programme:
 ```bash
 -rwsr-sr-x+ 1 flag12  level12  464 Mar  5  2016 level12.pl
 ```
 
-Je me rend compte que ce programme est execute par defaut en tant qu'utilisateur 'flag12' grace a la commande:
+Je me rend compte que ce programme est exécute par défaut en tant qu'utilisateur 'flag12' grâce à la commande:
 ```sh
 ps aux | grep flag12
 ```
 
-##### Entrees du programme:
+##### Entrées du programme:
 ```perl
 string x
 string y
 ```
 
 ##### Fonctionnement:
-Ce programme est compose de deux fonctions aux utilitees douteuses:
+Ce programme est composé de deux fonctions aux utilitées douteuses:
  * La fonction \<t>:
 	1. Applique un filtre sur 'x' qui transforme les lettres minuscules en majuscules.
-	2. Applique un filtre sur 'x' qui enleve tout ce qu'il y a apres un caractere de separation.
-	3. Execute une commande shell qui utilise la variable 'x' modifie.
+	2. Applique un filtre sur 'x' qui enlève tout ce qu'il y a après un caractère de séparation.
+	3. Exécute une commande shell qui utilise la variable 'x' modifiée.
  * La fonction \<n> est inutile dans son fonctionnement.
 
 > Le programme tourne sur un serveur tcp par defaut
 
 ##### Conclusions:
-Ce programme a une faille dans la fonction \<t> plus precisement au moment d'executer la commande shell. \
-Nous pouvons inserer la commande que nous voulons dans celle-ci tant que nous respectons ces regles simples:
- - Utiliser uniquement des caracteres majuscule.
- - Ne pas ecrire de caracteres de separation.
+Ce programme a une faille dans la fonction \<t> plus précisement au moment d'exécuter la commande shell. \
+Nous pouvons insérer la commande que nous voulons dans celle-ci tant que nous respectons ces règles simples:
+ - Utiliser uniquement des caractères majuscule.
+ - Ne pas écrire de caractères de séparation.
 
-### Solution:
-Je creer un lien symbolique leger pour me permettre d'executer getflag avec des  caracteres majuscules. \
-J'effectue une requete au serveur avec ma commande a injecter que je redirige dans le flux d'erreurs. \
-Puis j'affiche la derniere ligne du fichier de log du flux d'erreurs.
+### Résolution
+Je créer un lien symbolique léger pour me permettre d'exécuter getflag avec des caractères majuscules. \
+J'effectue une requête au serveur avec ma commande à injecter que je redirige dans le flux d'erreur. \
+Puis j'affiche la dernière ligne du fichier de log du flux d'erreur.
 
 #### commandes:
 ```bash
@@ -77,7 +77,7 @@ ln -s /bin/getflag /tmp/GETFLAG
 curl '127.0.0.1:4646?x="$(/*/GETFLAG>%262)"'
 tail -n 1 /var/log/apache2/error.log
 ```
-> Notez l'utilisation de shellcode '%26' pour eviter que le caractere de '&' soit pris en compte dans le filtre de separateurs.
+> Notez l'utilisation du shellcode '%26' pour éviter que le caractère de '&' soit pris en compte dans le filtre de séparateurs.
 
 
 **token :** g1qKMiRpXf53AWhDaU7FEkczr

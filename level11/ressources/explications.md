@@ -39,39 +39,39 @@ while 1 do
 end
 ```
 
-##### Details du programme:
+##### Détails du programme:
 ```bash
 -rwsr-sr-x  1 flag11  level11  668 Mar  5  2016 level11.lua
 ```
 
-Je me rend compte que ce programme est execute par defaut en tant qu'utilisateur 'flag11' grace a la commande:
+Je me rend compte que ce programme est exécuté par défaut en tant qu'utilisateur 'flag11' grâce à la commande:
 ```sh
 ps aux | grep flag11
 ```
 
-##### Entrees du programme:
+##### Entrées du programme:
 ```lua
 string mot_de_passe
 ```
 
 ##### Fonctionnement:
-Le programme est un serveur tcp qui tente de hasher la chaine de caracteres entree par l'utilisateur. \
-Il compare ensuite la chaine hashee avec une chaine predefinie pour afficher differents messages inutiles. 
+Le programme est un serveur tcp qui tente de hasher la chaîne de caractères entrée par l'utilisateur. \
+Il compare ensuite la chaîne hashée avec une chaîne prédefinie pour afficher différents messages inutiles. 
 
-> Le serveur est heberge sur l'addresse ip '127.0.0.1' avec le port '5151'.
+> Le serveur est hebergé sur l'addresse ip '127.0.0.1' avec le port '5151'.
 
-> Le serveur est execute en arriere-plan grace a cron par defaut.
+> Le serveur est exécute en arriere-plan gràce a cron par defaut.
 
 ##### Conclusions:
-La fonction hash a une vulnerabilite qui nous laisse executer du code shell comme nous le voulons. \
-Vu que ce programme est execute par l'utilisateur 'flag11' par defaut nous pouvons avoir acces a son flag.
+La fonction hash a une vulnérabilité qui nous laisse exécuter du code shell comme nous le voulons. \
+Vu que ce programme est exécuté par l'utilisateur 'flag11' par défaut nous pouvons avoir accès à son flag.
 
-> La ligne suivante est la cause de la vulnerabilite: \
+> La ligne suivante est la cause de la vulnérabilité: \
 > prog = io.popen("echo "..pass.." | sha1sum", "r")
 
-### Resolution
-J'effectue une commande qui permet d'obtenir le resultat de la commande 'getflag' une fois dans le programme. \
-Par la suite je redirige la sortie de cette derniere dans un fichier accessible car je ne pouvais pas la voir autrement. \
+### Résolution
+J'effectue une commande qui permet d'obtenir le résultat de la commande 'getflag' une fois dans le programme. \
+Par la suite je redirige la sortie de cette dernière dans un fichier accessible car je ne pouvais pas la voir autrement. \
 J'affiche ensuite le contenu de ce fichier.
 
 #### commandes:
