@@ -1,4 +1,4 @@
-# level11
+# [level11]
 
 ### Observations
 ##### J'affiche le programme '~/level11.lua':
@@ -71,7 +71,8 @@ Vu que ce programme est exécuté par l'utilisateur 'flag11' par défaut nous po
 
 ### Résolution
 J'effectue une commande qui permet d'obtenir le résultat de la commande 'getflag' une fois dans le programme. \
-Par la suite je redirige la sortie de cette dernière dans un fichier accessible car je ne pouvais pas la voir autrement. \
+Elle fonctionne car il suffit de créer un sous shell pour sortir de l'exécution classique du programme.\
+Par la suite je redirige la sortie de cette dernière dans un fichier accessible car je ne pouvais pas la voir autrement.1 \
 J'affiche ensuite le contenu de ce fichier.
 
 #### commandes:

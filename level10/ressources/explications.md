@@ -1,4 +1,4 @@
-# level10
+# [level10]
 
 ### Observations
 
@@ -99,7 +99,7 @@ Je créé un script qui effectue trois opérations distinctes en parallele.
  3. La dernière est une simple boucle qui récupère les données circulant sur le port réseau 6969 et affiche le resultat \
  quand ce n'est pas le contenu du fichier accessible (soit le programme).
 
-Il ne me reste plus qu'à lui donner les droits d'exécution et de l'exécuter pour avoir mon flag.
+Il ne me reste plus qu'a lui donner les droits d'exécution et de l'exécuter pour avoir mon flag.
 
 ##### /tmp/script.sh :
 ```bash
