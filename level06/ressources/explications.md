@@ -79,7 +79,7 @@ char *chemin_fichier
 
 ##### Fonctionnement:
 Il y a deux programmes:
- 1. Le premier est un programme c qui execute un script php '~/level06.php' avec les droit de l'utilisateur 'flag06'.
+ 1. Le premier est un programme c qui exécute un script php '~/level06.php' avec les droit de l'utilisateur 'flag06'.
  2. Le deuxieme applique un motif regex '/(\[x (.*)\])/e' qui transforme le contenue du fichier par le contenu du deuxieme argument après l'avoir évalué.
 
 ##### Conclusions:
@@ -90,7 +90,7 @@ Je peux donc exécuter du code shell librement.
 ### Résolution
 Je créé un fichier qui contient mon injection de code, puis je passe le chemin d'acces de ce dernier au programme '~/level6'. \
 Le contenue de la deuxieme couche de regex est evaluée en php car l'opérateur '/e' est utilisé. \
-Le parseur php execute ensuite 'getflag' car il est entouré par les caractéres '`'. \
+Le parseur php exécute ensuite 'getflag' car il est entouré par les caractéres '`'. \
 J'exécute ensuite le programme.
 
 #### commandes:

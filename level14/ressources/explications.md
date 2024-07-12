@@ -2,9 +2,9 @@
 
 ### Observations
 Il n'y a rien de visiblement disponible pour nous dans tout l'ordinateur. \
-Je decompile donc le seul programme disponible, 'getflag'.
+Je décompile donc le seul programme disponible, 'getflag'.
 
-##### Je decompile le programme '/bin/getflag':
+##### Je décompile le programme '/bin/getflag':
 ```c
 int	main()
 {
@@ -153,20 +153,20 @@ int	main()
 }
 ```
 
-##### Details du programme:
+##### Détails du programme:
 ```bash
 -rwxr-xr-x 1 root root 11833 Aug 30  2015 /bin/getflag
 ```
 
 ##### Fonctionnement:
-Le programme recupere l'id utilisateur puis affiche son token au prealable decrypte par la fonction \<ft_des>.
+Le programme recupere l'id utilisateur puis affiche son token au prealable décrypte par la fonction \<ft_des>.
 
 ##### Conclusions:
-Il me suffit d'executer une copie du programme avec l'appel a \<getuid> remplace par l'id de l'utilisateur 'flag14'.
+Il me suffit d'exécuter une copie du programme avec l'appel a \<getuid> remplace par l'id de l'utilisateur 'flag14'.
 
-### Resolution
+### Résolution
 Je copie le programme en remplacant l'appel a \<getuid> par l'id de l'utilisateur 'flag14'.
-Puis compile le code pour ensuite l'executer.
+Puis compile le code pour ensuite l'exécuter.
 
 > L'id d'un utilisateur peut etre recupere grace a la commande: 'id -u \<nom_utilisateur>'
 

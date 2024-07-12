@@ -39,7 +39,7 @@ n(t(param("x"), param("y")));
 -rwsr-sr-x+ 1 flag12  level12  464 Mar  5  2016 level12.pl
 ```
 
-Je me rend compte que ce programme est exécute par défaut en tant qu'utilisateur 'flag12' grâce à la commande:
+Je me rend compte que ce programme est exécuté par défaut en tant qu'utilisateur 'flag12' grâce à la commande:
 ```sh
 ps aux | grep flag12
 ```
